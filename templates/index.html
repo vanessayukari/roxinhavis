@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <title>roxinha.vis | Desempenho de streamers - Mês a Mês :)</title>
+</head>
+<body>
+<div class="titulo-container">
+    <div class="titulo">
+        <img src="{{ url_for('static', filename='img/logo/coracao.png') }}" alt="Coração">
+        <h1>Desempenho de streamers | Mês a Mês</h1>
+    </div>
+</div>
+<div class="detalhes-container">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='img/logo/logo.png') }}" alt="Logo Roxinha">
+    </div>
+    <div class="instrucoes">
+        <p>Faça upload de dois arquivos CSV da plataforma <a href="https://sullygnome.com/" target="_blank">Sullygnome</a> para realizar a análise.</p>
+        <p><i>Observação: Coloque o mês mais recente no campo "Mês 2"</i></p>
+    </div>
+</div>
+<!-- Forms -->
+<div class="formulario-container">
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <div class="jogo">
+            <label for="jogo">Nome do jogo:</label>
+            <input type="text" name="jogo" id="jogo" placeholder="Ex: League of Legends" required>
+        </div>
+        <div class="meses-container">
+            <div class="mes_1">
+                <label for="csv_mes1">Mês 1</label>
+                <input type="file" name="csv_mes1" id="csv_mes1" required>
+                <label for="mes1">Mês</label>
+                <select name="mes1" id="mes1" required>
+                    <option value="jan">Janeiro</option>
+                    <option value="fev">Fevereiro</option>
+                    <option value="mar">Março</option>
+                    <option value="abr">Abril</option>
+                    <option value="mai">Maio</option>
+                    <option value="jun">Junho</option>
+                    <option value="jul">Julho</option>
+                    <option value="ago">Agosto</option>
+                    <option value="set">Setembro</option>
+                    <option value="out">Outubro</option>
+                    <option value="nov">Novembro</option>
+                    <option value="dez">Dezembro</option>
+                </select>
+                <label for="ano1">Ano</label>
+                <select name="ano1" id="ano1" required>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+            </div>
+            <div class="mes_2">
+                <label for="csv_mes2">Mês 2</label>
+                <input type="file" name="csv_mes2" id="csv_mes2" required>
+                <label for="mes2">Mês</label>
+                <select name="mes2" id="mes2" required>
+                    <option value="jan">Janeiro</option>
+                    <option value="fev">Fevereiro</option>
+                    <option value="mar">Março</option>
+                    <option value="abr">Abril</option>
+                    <option value="mai">Maio</option>
+                    <option value="jun">Junho</option>
+                    <option value="jul">Julho</option>
+                    <option value="ago">Agosto</option>
+                    <option value="set">Setembro</option>
+                    <option value="out">Outubro</option>
+                    <option value="nov">Novembro</option>
+                    <option value="dez">Dezembro</option>
+                </select>
+                <label for="ano2">Ano</label>
+                <select name="ano2" id="ano2" required>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+            </div>
+        </div>
+        <!-- Botão para gerar análise -->
+        <div class="botao">
+            <button type="submit">Analisar</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

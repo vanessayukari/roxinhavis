@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <title>roxinha.vis | Resultados da Análise</title>
+</head>
+<body>
+    <div class="analise-container">
+        <img src="{{ url_for('static', filename='img/logo/coracao.png') }}" alt="Coração">
+        <h1>{{ jogo }} | Comparação entre {{ mes1 }}/{{ ano1 }} e {{ mes2 }}/{{ ano2 }}</h1>
+    </div>
+<div class="streamers-container">
+    <h3>Canais Twitch</h3>
+    <ul>
+    {% set canais_unicos = {} %}
+    {% for item in insights['top_10_mes1'] %}
+        {% set canal_nome = item.split(' - ')[0] | replace('<strong>', '') | replace('</strong>', '') %}
+        {% set canal_logo = canal_nome | lower + '_logo.png' %}
+        {% if canal_nome not in canais_unicos %}
+            {% set canais_unicos = canais_unicos.update({canal_nome: canal_nome}) %}
+            <li>
+                <a href="https://twitch.tv/{{ canal_nome }}" target="_blank">
+                    {% if canal_logo %}
+                        <img src="{{ url_for('static', filename='img/streamers/' ~ canal_logo) }}" alt="{{ canal_nome }}" class="logo" style="width: 30px; height: 30px; margin-right: 10px;">
+                    {% else %}
+                        <span>Logo não encontrado</span>
+                    {% endif %}
+                    {{ canal_nome }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    {% for item in insights['top_10_mes2'] %}
+        {% set canal_nome = item.split(' - ')[0] | replace('<strong>', '') | replace('</strong>', '') %}
+        {% set canal_logo = canal_nome | lower + '_logo.png' %}
+
+        {% if canal_nome not in canais_unicos %}
+            {% set canais_unicos = canais_unicos.update({canal_nome: canal_nome}) %}
+            <li>
+                <a href="https://twitch.tv/{{ canal_nome }}" target="_blank">
+                    {% if canal_logo %}
+                        <img src="{{ url_for('static', filename='img/streamers/' + canal_logo) }}" alt="{{ canal_nome }}" class="logo" style="width: 30px; height: 30px; margin-right: 10px;">
+                    {% else %}
+                        <span>Logo não encontrado</span>
+                    {% endif %}
+                    {{ canal_nome }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+</div>
+    <div class="baixar-resultados">
+    <a href="{{ url_for('download', filename=doc_path, mes1=mes1, ano1=ano1, mes2=mes2, ano2=ano2) }}" class="botao-baixar">Baixar Resultados ᐳ</a>
+</div>
+    <!-- Top 10 -->
+    <div class="top-10-container">
+        <div class="top-10">
+            <h2>Top 10 mais assistidos - {{ mes1 }}/{{ ano1 }}</h2>
+            <ul>
+                {% for item in insights['top_10_mes1'] %}
+                    <li>{{ item | safe }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="top-10">
+            <h2>Top 10 mais assistidos - {{ mes2 }}/{{ ano2 }}</h2>
+            <ul>
+                {% for item in insights['top_10_mes2'] %}
+                    <li>{{ item | safe }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!-- Graficos -->
+    <div class="grafico-container">
+        <div class="grafico">
+            <h2>{{ mes1 }}/{{ ano1 }}</h2>
+            <img src="{{ url_for('static', filename=insights['grafico_mes1']) }}" alt="Gráfico de Pizza do Top 10 - {{ mes1 }}/{{ ano1 }}">
+        </div>
+        <div class="grafico">
+            <h2>{{ mes2 }}/{{ ano2 }}</h2>
+            <img src="{{ url_for('static', filename=insights['grafico_mes2']) }}" alt="Gráfico de Pizza do Top 10 - {{ mes2 }}/{{ ano2 }}">
+        </div>
+    </div>
+    <!-- Outros resultados -->
+    <div class="resultado-container">
+        <div class="resultado">
+            <h2>Crescimento de Seguidores</h2>
+            <label for="1" class="ver-mais"><h4>Detalhes</h4></label>
+            <input type="checkbox" class="ver-mais-checkbox" id="1">
+            <div class="mais-resultados">
+            {% if insights.crescimento %}
+                <ul>
+                    {% for item in insights.crescimento %}
+                        <li>{{ item | safe }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não houve crescimento de seguidores.</p>
+            {% endif %}
+            </div>
+        </div>
+        <div class="resultado">
+            <h2>Queda de Seguidores</h2>
+            <label for="2" class="ver-mais"><h4>Detalhes</h4></label>
+            <input type="checkbox" class="ver-mais-checkbox" id="2">
+            <div class="mais-resultados">
+            {% if insights.queda %}
+                <ul>
+                    {% for item in insights.queda %}
+                        <li>{{ item | safe }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não houve queda de seguidores.</p>
+            {% endif %}
+        </div>
+        </div>
+        <div class="resultado">
+            <h2>Crescimento de Tempo Assistido</h2>
+            <label for="3" class="ver-mais"><h4>Detalhes</h4></label>
+            <input type="checkbox" class="ver-mais-checkbox" id="3">
+            <div class="mais-resultados">
+            {% if insights.crescimento_tempo_assistido %}
+                <ul>
+                    {% for item in insights.crescimento_tempo_assistido %}
+                        <li>{{ item | safe }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não houve crescimento no tempo assistido.</p>
+            {% endif %}
+        </div>
+        </div>
+        <div class="resultado">
+            <h2>Crescimento de Tempo Streamado</h2>
+            <label for="4" class="ver-mais"><h4>Detalhes</h4></label>
+            <input type="checkbox" class="ver-mais-checkbox" id="4">
+            <div class="mais-resultados">
+            {% if insights.crescimento_tempo_streamado %}
+                <ul>
+                    {% for item in insights.crescimento_tempo_streamado %}
+                        <li>{{ item | safe }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não houve crescimento no tempo streamado.</p>
+            {% endif %}
+        </div>
+        </div>
+        <div class="resultado">
+            <h2>Streamers não encontrados no Top 50 de {{ mes2 }}/{{ ano2 }}</h2>
+            <label for="5" class="ver-mais"><h4>Detalhes</h4></label>
+            <input type="checkbox" class="ver-mais-checkbox" id="5">
+            <div class="mais-resultados">
+            {% if insights.sumidos %}
+                <ul>
+                    {% for item in insights.sumidos %}
+                        <li>{{ item | safe }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Não houve streamers que sumiram.</p>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    <!-- Botão para nova análise -->
+    <form method="GET" action="/">
+        <button type="submit" class="botao-nova-analise">Nova Análise</button>
+    </form>
+    <!-- Creditos -->
+    <div class="creditos">
+        <a href="http://github.com/vanessayukari">
+            Feito por vanessayukari
+        </a>
+    </div>
+</body>
+</html>
