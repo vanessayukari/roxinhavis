@@ -37,6 +37,10 @@ Pro projeto funcionar corretamente, os arquivos inseridos devem ser da plataform
 
 ### Como Rodar o Projeto 🚀
 
+Certifique-se de ter o [PyCharm](https://www.jetbrains.com/pycharm/download/?section=windows) instalado em sua máquina.
+
+**Versão Python: [3.9.12](https://www.python.org/downloads/windows/)**
+
 ### → Passo 1: Clonar o Repositório 🧑‍💻
 
 Primeiro, é necessário clonar o repositório para sua máquina local. Para isso, abra o terminal e execute o seguinte comando:
